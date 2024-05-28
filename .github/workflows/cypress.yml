@@ -25,6 +25,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Install Cypress XPath plugin
+      run: npm install -D cypress-xpath
+
     - name: Run Cypress tests
       run: npx cypress run
 
