@@ -47,5 +47,5 @@ jobs:
           cypress/results
 
 env:
-  CYPRESS_baseUrl: 'http://localhost:3000'  # Ensure this matches your local setup
+  CYPRESS_baseUrl: 'http://localhost:59428/__/#/specs'  # Ensure this matches your local setup
   CYPRESS_API_KEY: ${{ secrets.CYPRESS_API_KEY }}  # Ensure this secret is set in your GitHub repository
