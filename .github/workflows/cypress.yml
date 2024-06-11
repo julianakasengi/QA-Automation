@@ -14,9 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: List files
-      run: dir
-
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
@@ -25,11 +22,19 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Install Cypress XPath plugin
-      run: npm install -D cypress-xpath
+    - name: Install Cypress
+      run: npm install cypress
 
-    - name: Run Cypress tests
-      run: npx cypress run
+    - name: Start the application
+      run: npm start &
+      env:
+        CI: true
+
+    - name: Wait for the app to be ready
+      run: npx wait-on http://localhost:3000
+
+    - name: Run Cypress tests with debug logs
+      run: npx cypress run --headed --browser chrome
 
     - name: Upload Cypress artifacts
       if: always()
@@ -39,3 +44,8 @@ jobs:
         path: |
           cypress/screenshots
           cypress/videos
+          cypress/results
+
+env:
+  CYPRESS_baseUrl: 'http://localhost:3000'  # Ensure this matches your local setup
+  CYPRESS_API_KEY: ${{ secrets.CYPRESS_API_KEY }}  # Ensure this secret is set in your GitHub repository
